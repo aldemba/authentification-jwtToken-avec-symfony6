@@ -50,6 +50,7 @@ class RegistrationController extends AbstractController
             );
             $user->setPassword($hashedPassword);
             $user->setEmail($email);
+            $user->setRoles(['ROLE_USER']);
     
             $em->persist($user);
             $em->flush();
