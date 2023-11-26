@@ -50,10 +50,29 @@ class RegistrationController extends AbstractController
             );
             $user->setPassword($hashedPassword);
             $user->setEmail($email);
-            $user->setRoles(['ROLE_USER']);
+
+             // Vérifiez si le champ "roles" est présent dans les données de la requête
+        if (property_exists($decoded, 'roles')) {
+            // Assurez-vous que les rôles sont un tableau
+            if (is_array($decoded->roles)) {
+                $user->setRoles($decoded->roles);
+            } else {
+                $user->setRoles([$decoded->roles]);
+            }
+        } 
+        // else {
+        //     // Si le champ "roles" n'est pas présent, attribuez un rôle par défaut
+        //     $user->setRoles(['ROLE_USER']);
+        // }
+
+        $em->persist($user);
+        $em->flush();
+
+
+            // $user->setRoles(['ROLE_USER']);
     
-            $em->persist($user);
-            $em->flush();
+            // $em->persist($user);
+            // $em->flush();
       
             return $this->json(['message' => 'Enregistré avec succès']);
         }

@@ -1,0 +1,8 @@
+   #[Assert\Valid]
+    #[Assert\NotBlank(
+        message:"le champ role ne peut etre vide"    
+        )]
+    #[Assert\Count(
+        min:1,
+        minMessage:"il faut au moins un role pour le user"    
+        )]
